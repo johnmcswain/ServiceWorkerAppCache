@@ -3,9 +3,13 @@
  */
 
 this.addEventListener('install', function(event) {
+    //debugger
     event.waitUntil(
+
+
         caches.open('v1').then(function(cache) {
             return cache.addAll([
+                './',
                 './sw-test/',
                 './sw-test/pure-min.css',
                 './sw-test/MMBNRoll.jpg',
@@ -13,6 +17,7 @@ this.addEventListener('install', function(event) {
                 './sw-test/jquery-3.2.0.min.js'
             ]);
         })
+
     );
 });
 
