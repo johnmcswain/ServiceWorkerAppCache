@@ -1,38 +1,51 @@
-/**
- * Created by johnmcswain on 3/22/17.
- */
+var CACHE_NAME = 'bcs-v2';
+var urlsToCache = [
+    '/sw-test/',
+    '/sw-test/pure-min.css',
+    '/sw-test/MMBNRoll.jpg',
+    '/sw-test/Megamansoul_search2.jpg',
+    '/sw-test/jquery-3.2.0.min.js'
+];
 
-this.addEventListener('install', function(event) {
-    //debugger
+self.addEventListener('install', function(event) {
     event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(function(cache) {
+                console.log('Opened cache');
+                return cache.addAll(urlsToCache);
+             }).catch(function(){
 
+            })
 
-        caches.open('v1').then(function(cache) {
-            return cache.addAll([
-                './',
-                './sw-test/',
-                './sw-test/pure-min.css',
-                './sw-test/MMBNRoll.jpg',
-                './sw-test/Megamansoul_search2.jpg',
-                './sw-test/jquery-3.2.0.min.js'
-            ]);
-        })
-
-    );
+    )
 });
 
 
-this.addEventListener('fetch', function(event) {
-    var response;
-    event.respondWith(caches.match(event.request).catch(function() {
-        return fetch(event.request);
-    }).then(function(r) {
-        response = r;
-        caches.open('v1').then(function(cache) {
-            cache.put(event.request, response);
-        });
-        return response.clone();
-    }).catch(function() {
-        return ;
-    }));
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+        caches.match(event.request).then(function(response) {
+            // Cache hit - return response
+            if (response) {
+                return response;
+            }
+            return fetch(event.request);
+        })
+    )
+
+});
+self.addEventListener('activate', function(event) {
+
+    var cacheWhitelist = [CACHE_NAME];
+
+    event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.map(function(cacheName) {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
 });
