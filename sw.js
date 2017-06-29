@@ -1,10 +1,10 @@
 var CACHE_NAME = 'bcs-v2';
 var urlsToCache = [
-    '/sw-test/',
-    '/sw-test/pure-min.css',
-    '/sw-test/MMBNRoll.jpg',
-    '/sw-test/Megamansoul_search2.jpg',
-    '/sw-test/jquery-3.2.0.min.js'
+    'sw-test/',
+    'sw-test/pure-min.css',
+    'sw-test/MMBNRoll.jpg',
+    'sw-test/Megamansoul_search2.jpg',
+    'sw-test/jquery-3.2.0.min.js'
 ];
 
 self.addEventListener('install', function(event) {
