@@ -1,6 +1,5 @@
 var CACHE_NAME = 'bcs-v2';
 var urlsToCache = [
-    'sw-test/',
     'sw-test/pure-min.css',
     'sw-test/MMBNRoll.jpg',
     'sw-test/Megamansoul_search2.jpg',
